@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import cytoscape from 'cytoscape';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Card } from '../ui/card';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 import NodeDetails from './NodeDetails';
 import GraphControls from './GraphControls';
 import cola from 'cytoscape-cola';
 import CreateNodeDialog from './CreateNodeDialog';
 import { graphStyles } from '../../constants/graphStyles';
-import {createNode} from "../../pages/api/endpoint"
 import { toast } from 'sonner'
 
 cytoscape.use(cola);

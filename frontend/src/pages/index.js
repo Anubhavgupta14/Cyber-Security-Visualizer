@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import GraphContainer from "@/components/Graph/GraphContainer";
+import GraphContainer from "../components/graph/GraphContainer";
 import { allList } from "./api/endpoint";
 import { Toaster, toast } from 'sonner'
 import { Const } from "../utils/Constant";

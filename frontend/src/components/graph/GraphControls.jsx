@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '../ui/button';
 
 const GraphControls = ({ cy }) => {
   const handleZoomIn = () => cy?.zoom(cy.zoom() * 1.2);
