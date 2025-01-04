@@ -4,7 +4,7 @@ import { allList } from "./api/endpoint";
 import { Toaster, toast } from 'sonner'
 import { Const } from "../utils/Constant";
 
-const index = () => {
+const Index = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
   const [searchParams, setSearchParams] = useState({search:""});
@@ -32,8 +32,6 @@ const index = () => {
     setSearchParams((prev)=>({...prev,search}));
   }
 
-
-
   return (
     <>
     <Toaster />
@@ -44,4 +42,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
