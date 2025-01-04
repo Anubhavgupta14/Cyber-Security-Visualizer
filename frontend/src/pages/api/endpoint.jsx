@@ -9,13 +9,19 @@ export const createNode = async (body) => {
   return res.json();
 };
 
-export const allList = async (params) => {
+export const allList = async (searchParams) => {
   const res = await fetch(
-    Const.Link + `api/graph?search=${params}`,
-    new Headers("GET")
+    Const.Link + `api/graph?search=${searchParams?.search}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
   );
   return ProcessAPI(res);
 };
+
 export const getNodeById = async (id) => {
   const res = await fetch(Const.Link + `api/graph/${id}`, new Headers("GET"));
   return ProcessAPI(res);

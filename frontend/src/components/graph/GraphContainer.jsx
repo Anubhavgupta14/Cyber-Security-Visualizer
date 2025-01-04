@@ -13,11 +13,11 @@ import { toast } from 'sonner'
 
 cytoscape.use(cola);
 
-const GraphContainer = ({ data, setUpdate }) => {
+const GraphContainer = ({ data, setUpdate, handleSearch }) => {
   const cyRef = useRef(null);
   const [cy, setCy] = useState(null);
   const [selectedNode, setSelectedNode] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   
   
   useEffect(() => {
@@ -64,8 +64,10 @@ const GraphContainer = ({ data, setUpdate }) => {
 
   };
 
+
   const transformData = (data) => {
     const elements = [];
+    if(data){ 
     data.forEach(item => {
       item.agents.forEach(agent => {
         elements.push({
@@ -97,18 +99,10 @@ const GraphContainer = ({ data, setUpdate }) => {
         });
       });
     });
+  }
     return elements;
   };
 
-  const handleSearch = () => {
-    if (!cy) return;
-    cy.elements().removeClass('highlighted');
-    if (searchTerm) {
-      cy.elements().filter(ele => 
-        ele.data().label.toLowerCase().includes(searchTerm.toLowerCase())
-      ).addClass('highlighted');
-    }
-  };
 
   return (
     <>
@@ -122,7 +116,7 @@ const GraphContainer = ({ data, setUpdate }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-64 color-white"
           />
-          <Button onClick={handleSearch}>Search</Button>
+          <Button onClick={()=>{handleSearch(searchTerm)}}>Search</Button>
         </div>
         <GraphControls cy={cy} />
         <div ref={cyRef} className="w-full h-full" />
