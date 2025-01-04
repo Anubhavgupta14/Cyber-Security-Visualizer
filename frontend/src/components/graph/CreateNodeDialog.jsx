@@ -9,14 +9,19 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Plus, Trash2 } from "lucide-react"
 
 const CreateNodeDialog = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     query: '',
     agentName: '',
-    toolName: '',
-    toolInput: '',
-    toolOutput: '',
+    tools: [
+      {
+        name: '',
+        input: '',
+        output: '',
+      }
+    ],
     agentOutput: '',
     response: ''
   });
@@ -31,28 +36,40 @@ const CreateNodeDialog = ({ onSubmit }) => {
       agents: [
         {
           name: formData.agentName,
-          tools: [
-            {
-              name: formData.toolName,
-              input: formData.toolInput,
-              output: formData.toolOutput,
-              idx: `tool_${Math.random().toString(36).substr(2, 9)}`,
-              _id: Math.random().toString(36).substr(2, 9)
-            }
-          ],
+          tools: formData.tools.map(tool => ({
+            ...tool,
+            idx: `tool_${Math.random().toString(36).substr(2, 9)}`,
+          })),
           images: [],
           output: formData.agentOutput,
           idx: `agent_${Math.random().toString(36).substr(2, 9)}`,
-          _id: Math.random().toString(36).substr(2, 9)
         }
       ],
       response: formData.response,
-      total_tokens: 0,
+      total_tokens: 1909,
       is_active: true,
-      _id: Math.random().toString(36).substr(2, 9)
     };
 
     onSubmit(newNode);
+  };
+
+  const addTool = () => {
+    setFormData({
+      ...formData,
+      tools: [...formData.tools, { name: '', input: '', output: '' }]
+    });
+  };
+
+  const removeTool = (index) => {
+    if (formData.tools.length === 1) return;
+    const newTools = formData.tools.filter((_, i) => i !== index);
+    setFormData({ ...formData, tools: newTools });
+  };
+
+  const updateTool = (index, field, value) => {
+    const newTools = [...formData.tools];
+    newTools[index] = { ...newTools[index], [field]: value };
+    setFormData({ ...formData, tools: newTools });
   };
 
   return (
@@ -60,7 +77,7 @@ const CreateNodeDialog = ({ onSubmit }) => {
       <DialogTrigger asChild>
         <Button className="absolute top-4 right-4 z-10">Create Node</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Create New Security Analysis</DialogTitle>
         </DialogHeader>
@@ -83,31 +100,63 @@ const CreateNodeDialog = ({ onSubmit }) => {
             />
           </div>
           
-          <div>
-            <Label>Tool Name</Label>
-            <Input 
-              value={formData.toolName}
-              onChange={(e) => setFormData({...formData, toolName: e.target.value})}
-              placeholder="SQL Analyzer"
-            />
-          </div>
-          
-          <div>
-            <Label>Tool Input</Label>
-            <Input 
-              value={formData.toolInput}
-              onChange={(e) => setFormData({...formData, toolInput: e.target.value})}
-              placeholder="Enter tool input"
-            />
-          </div>
-          
-          <div>
-            <Label>Tool Output</Label>
-            <Input 
-              value={formData.toolOutput}
-              onChange={(e) => setFormData({...formData, toolOutput: e.target.value})}
-              placeholder="Enter tool output"
-            />
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label>Tools</Label>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm"
+                onClick={addTool}
+                className="flex items-center gap-2 color-[#000]"
+              >
+                <Plus style={{color:"black"}} className="w-4 h-4" />
+                <p style={{color:"black"}}>Add Tool</p>
+              </Button>
+            </div>
+            
+            {formData.tools.map((tool, index) => (
+              <div key={index} className="space-y-4 p-4 border rounded-lg relative">
+                {formData.tools.length > 1 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute top-2 right-2"
+                    onClick={() => removeTool(index)}
+                  >
+                    <Trash2 className="w-4 h-4 text-red-500" />
+                  </Button>
+                )}
+                
+                <div>
+                  <Label>Tool Name</Label>
+                  <Input 
+                    value={tool.name}
+                    onChange={(e) => updateTool(index, 'name', e.target.value)}
+                    placeholder="SQL Analyzer"
+                  />
+                </div>
+                
+                <div>
+                  <Label>Tool Input</Label>
+                  <Input 
+                    value={tool.input}
+                    onChange={(e) => updateTool(index, 'input', e.target.value)}
+                    placeholder="Enter tool input"
+                  />
+                </div>
+                
+                <div>
+                  <Label>Tool Output</Label>
+                  <Input 
+                    value={tool.output}
+                    onChange={(e) => updateTool(index, 'output', e.target.value)}
+                    placeholder="Enter tool output"
+                  />
+                </div>
+              </div>
+            ))}
           </div>
           
           <div>

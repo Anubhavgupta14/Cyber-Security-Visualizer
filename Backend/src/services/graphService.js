@@ -12,9 +12,21 @@ exports.createGraph = async (data) => {
   }
 };
 
-exports.getGraphs = async () => {
+exports.getGraphs = async (searchParams = {}) => {
   try {
-    return await Graph.find().sort({ timestamp: -1 });
+    const query = {};
+    
+    if (searchParams.search) {
+      query.$or = [
+        { 'agents.name': { $regex: searchParams.search, $options: 'i' } },
+        { 'agents.tools.name': { $regex: searchParams.search, $options: 'i' } }
+      ];
+    }
+
+    return await Graph.find(query)
+      .sort({ timestamp: -1 })
+      .exec();
+      
   } catch (error) {
     logger.error('Error fetching graphs:', error);
     throw error;

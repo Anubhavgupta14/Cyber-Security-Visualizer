@@ -4,6 +4,7 @@ const logger = require('../utils/logger');
 
 exports.createGraph = async (req, res, next) => {
     try {
+      console.log("Graph",req.body);
       const graphData = await graphService.createGraph(req.body);
       
       // Access io through req.app.locals
@@ -18,14 +19,18 @@ exports.createGraph = async (req, res, next) => {
     }
   };
 
-exports.getGraphs = async (req, res, next) => {
-  try {
-    const graphs = await graphService.getGraphs();
-    res.json(graphs);
-  } catch (error) {
-    next(error);
-  }
-};
+  exports.getGraphs = async (req, res, next) => {
+    try {
+      const { search } = req.query;
+      
+      const searchParams = {search};
+      
+      const graphs = await graphService.getGraphs(searchParams);
+      res.json(graphs);
+    } catch (error) {
+      next(error);
+    }
+  };
 
 exports.getGraphById = async (req, res, next) => {
   try {
