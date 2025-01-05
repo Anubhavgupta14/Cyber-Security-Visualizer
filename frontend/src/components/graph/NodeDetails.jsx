@@ -1,12 +1,15 @@
+import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import CreateNodeDialog from './CreateNodeDialog';
 
-const NodeDetails = ({ node }) => {
+const NodeDetails = ({ node, onEdit }) => {
   if (!node) return null;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>{node.label}</CardTitle>
+        <CreateNodeDialog mode="edit" initialData={node} onSubmit={onEdit} />
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

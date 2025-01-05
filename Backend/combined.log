@@ -95,3 +95,36 @@
 {"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-04T21:39:24.163Z"}
 {"level":"info","message":"Server running on port 3001","timestamp":"2025-01-04T21:44:16.643Z"}
 {"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-04T21:44:17.709Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:20:02.474Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:20:03.980Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:20:44.532Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:20:45.293Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:20:49.733Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:20:50.502Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:20:55.095Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:20:56.835Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:21:05.292Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:21:06.144Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:22:18.808Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:22:20.182Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:25:53.129Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:25:54.094Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:25:56.664Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:25:57.293Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:25:59.383Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:26:00.082Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:26:03.767Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:26:04.358Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:26:14.971Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:26:15.677Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:26:59.719Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:27:00.650Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:27:20.951Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:27:22.062Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:27:27.789Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:27:28.702Z"}
+{"$clusterTime":{"clusterTime":{"$timestamp":"7456376393396387841"},"signature":{"hash":"RhVk6yeFI5GGiK8vd0k1hrvuFGc=","keyId":{"high":1735840796,"low":5,"unsigned":false}}},"code":2,"codeName":"BadValue","level":"error","message":"Error updating tool: No array filter found for identifier 'tool' in path 'agents.$[].tools.$[tool].name'","ok":0,"operationTime":{"$timestamp":"7456376393396387841"},"stack":"MongoServerError: No array filter found for identifier 'tool' in path 'agents.$[].tools.$[tool].name'\n    at Connection.onMessage (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\connection.js:202:26)\n    at MessageStream.<anonymous> (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\connection.js:61:60)\n    at MessageStream.emit (node:events:514:28)\n    at processIncomingData (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\message_stream.js:124:16)\n    at MessageStream._write (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\message_stream.js:33:9)\n    at writeOrBuffer (node:internal/streams/writable:447:12)\n    at _write (node:internal/streams/writable:389:10)\n    at Writable.write (node:internal/streams/writable:393:10)\n    at TLSSocket.ondata (node:internal/streams/readable:817:22)\n    at TLSSocket.emit (node:events:514:28)","timestamp":"2025-01-05T10:28:38.582Z"}
+{"$clusterTime":{"clusterTime":{"$timestamp":"7456376393396387841"},"signature":{"hash":"RhVk6yeFI5GGiK8vd0k1hrvuFGc=","keyId":{"high":1735840796,"low":5,"unsigned":false}}},"code":2,"codeName":"BadValue","level":"error","message":"Error updating tool: No array filter found for identifier 'tool' in path 'agents.$[].tools.$[tool].name'","ok":0,"operationTime":{"$timestamp":"7456376393396387841"},"stack":"MongoServerError: No array filter found for identifier 'tool' in path 'agents.$[].tools.$[tool].name'\n    at Connection.onMessage (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\connection.js:202:26)\n    at MessageStream.<anonymous> (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\connection.js:61:60)\n    at MessageStream.emit (node:events:514:28)\n    at processIncomingData (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\message_stream.js:124:16)\n    at MessageStream._write (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\message_stream.js:33:9)\n    at writeOrBuffer (node:internal/streams/writable:447:12)\n    at _write (node:internal/streams/writable:389:10)\n    at Writable.write (node:internal/streams/writable:393:10)\n    at TLSSocket.ondata (node:internal/streams/readable:817:22)\n    at TLSSocket.emit (node:events:514:28)","timestamp":"2025-01-05T10:28:38.592Z"}
+{"level":"error","message":"MongoServerError: No array filter found for identifier 'tool' in path 'agents.$[].tools.$[tool].name'\n    at Connection.onMessage (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\connection.js:202:26)\n    at MessageStream.<anonymous> (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\connection.js:61:60)\n    at MessageStream.emit (node:events:514:28)\n    at processIncomingData (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\message_stream.js:124:16)\n    at MessageStream._write (C:\\Anubhav\\Cyber-Security-Graph\\Backend\\node_modules\\mongodb\\lib\\cmap\\message_stream.js:33:9)\n    at writeOrBuffer (node:internal/streams/writable:447:12)\n    at _write (node:internal/streams/writable:389:10)\n    at Writable.write (node:internal/streams/writable:393:10)\n    at TLSSocket.ondata (node:internal/streams/readable:817:22)\n    at TLSSocket.emit (node:events:514:28)","timestamp":"2025-01-05T10:28:38.596Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-01-05T10:28:57.259Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-01-05T10:28:58.139Z"}

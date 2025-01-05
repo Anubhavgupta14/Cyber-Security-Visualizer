@@ -9,6 +9,8 @@ import cola from 'cytoscape-cola';
 import CreateNodeDialog from './CreateNodeDialog';
 import { graphStyles } from '../../constants/graphStyles';
 import { toast } from 'sonner'
+import { editNode } from '../../pages/api/endpoint';
+import { Const } from '@/utils/Constant';
 
 cytoscape.use(cola);
 
@@ -48,7 +50,7 @@ const GraphContainer = ({ data, setUpdate, handleSearch }) => {
   const handleCreateNode = async(newNode) => {
 
     try {
-      const res = await fetch("http://localhost:3001/api/graph", {
+      const res = await fetch(`${Const.Link}api/graph`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -63,6 +65,18 @@ const GraphContainer = ({ data, setUpdate, handleSearch }) => {
 
   };
 
+  const handleEditNode = async (updatedNode) => {
+    try {
+      const agentId = selectedNode.id;
+      const userId = selectedNode.userId || 'default'; // Adjust based on your data structure
+      await editNode(userId, JSON.stringify(updatedNode), agentId);
+      setUpdate(prev => !prev);
+      toast.success('Node updated successfully');
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to update node');
+    }
+  };
 
   const transformData = (data) => {
     const elements = [];
@@ -102,6 +116,8 @@ const GraphContainer = ({ data, setUpdate, handleSearch }) => {
     return elements;
   };
 
+  console.log(selectedNode,"selectedNode")
+
 
   return (
     <>
@@ -122,7 +138,7 @@ const GraphContainer = ({ data, setUpdate, handleSearch }) => {
       </div>
       <div className="w-1/4 p-4 border-l pt-20">
         {selectedNode ? (
-          <NodeDetails node={selectedNode} />
+          <NodeDetails node={selectedNode} onEdit={handleEditNode} />
         ) : (
           <Card className="p-4">
             <p>Select a node to view details</p>

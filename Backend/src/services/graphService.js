@@ -61,3 +61,45 @@ exports.updateNode = async (graphId, agentId, updateData) => {
       throw error;
     }
   };
+
+exports.updateAgent = async (agentId, updateData) => {
+  try {
+    const graph = await Graph.findOneAndUpdate(
+      { 'agents._id': agentId },
+      {
+        $set: {
+          'agents.$.name': updateData.name,
+          'agents.$.output': updateData.output,
+        }
+      },
+      { new: true }
+    );
+    return graph;
+  } catch (error) {
+    logger.error('Error updating agent:', error);
+    throw error;
+  }
+};
+
+exports.updateTool = async (toolId, updateData) => {
+  try {
+    const graph = await Graph.findOneAndUpdate(
+      { 'agents.tools._id': toolId },
+      {
+        $set: {
+          'agents.$[].tools.$[tool].name': updateData.name,
+          'agents.$[].tools.$[tool].input': updateData.input,
+          'agents.$[].tools.$[tool].output': updateData.output,
+        }
+      },
+      {
+        arrayFilters: [{ 'tool._id': toolId }],
+        new: true
+      }
+    );
+    return graph;
+  } catch (error) {
+    logger.error('Error updating tool:', error);
+    throw error;
+  }
+};

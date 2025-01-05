@@ -65,3 +65,49 @@ exports.updateNode = async (req, res, next) => {
       next(error);
     }
   };
+
+exports.updateAgent = async (req, res, next) => {
+  try {
+    const { agentId } = req.params;
+    const updateData = req.body;
+    
+    const updatedGraph = await graphService.updateAgent(agentId, updateData);
+    
+    if (!updatedGraph) {
+      return res.status(404).json({ message: 'Agent not found' });
+    }
+
+    const io = req.app.locals.io;
+    if (io) {
+      io.emit('graphUpdate', updatedGraph);
+    }
+    
+    res.json(updatedGraph);
+  } catch (error) {
+    logger.error('Error updating agent:', error);
+    next(error);
+  }
+};
+
+exports.updateTool = async (req, res, next) => {
+  try {
+    const { toolId } = req.params;
+    const updateData = req.body;
+    
+    const updatedGraph = await graphService.updateTool(toolId, updateData);
+    
+    if (!updatedGraph) {
+      return res.status(404).json({ message: 'Tool not found' });
+    }
+
+    const io = req.app.locals.io;
+    if (io) {
+      io.emit('graphUpdate', updatedGraph);
+    }
+    
+    res.json(updatedGraph);
+  } catch (error) {
+    logger.error('Error updating tool:', error);
+    next(error);
+  }
+};

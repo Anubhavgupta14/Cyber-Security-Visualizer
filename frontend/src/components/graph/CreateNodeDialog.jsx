@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -11,7 +11,7 @@ import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Plus, Trash2 } from "lucide-react"
 
-const CreateNodeDialog = ({ onSubmit }) => {
+const CreateNodeDialog = ({ onSubmit, mode = 'create', initialData = null }) => {
   const [formData, setFormData] = useState({
     query: '',
     agentName: '',
@@ -25,6 +25,22 @@ const CreateNodeDialog = ({ onSubmit }) => {
     agentOutput: '',
     response: ''
   });
+
+  console.log(initialData,"initialData") ;
+
+  useEffect(() => {
+    if (mode === 'edit' && initialData) {
+
+      
+      setFormData({
+        query: initialData.query || '',
+        agentName: initialData.name || '',
+        tools: initialData.tools || [{ name: '', input: '', output: '' }],
+        agentOutput: initialData.output || '',
+        response: initialData.response || ''
+      });
+    }
+  }, [initialData, mode]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,11 +91,13 @@ const CreateNodeDialog = ({ onSubmit }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="absolute top-4 right-4 z-10">Create Node</Button>
+        <Button className={mode === 'create' ? "absolute top-4 right-4 z-10" : ""}>
+          {mode === 'create' ? 'Create Node' : 'Edit Node'}
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Create New Security Analysis</DialogTitle>
+          <DialogTitle>{mode === 'create' ? 'Create New' : 'Edit'} Security Analysis</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -177,7 +195,9 @@ const CreateNodeDialog = ({ onSubmit }) => {
             />
           </div>
 
-          <Button type="submit" className="w-full">Create</Button>
+          <Button type="submit" className="w-full">
+            {mode === 'create' ? 'Create' : 'Save Changes'}
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

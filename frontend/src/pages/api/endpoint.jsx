@@ -28,9 +28,34 @@ export const getNodeById = async (id) => {
 };
 
 export const editNode = async (id, body, agentId) => {
-  const res = await fetch(Const.Link + `api/users/${id}/nodes/${agentId}`, {
+  const res = await fetch(Const.Link + `api/graph/${id}/nodes/${agentId}`, {
     method: "PUT",
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: body,
   });
-  return res.json();
+  return ProcessAPI(res);
+};
+
+export const updateAgent = async (agentId, body) => {
+  const res = await fetch(Const.Link + `api/graph/agents/${agentId}`, {
+    method: "PUT",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+  return ProcessAPI(res);
+};
+
+export const updateTool = async (toolId, body) => {
+  const res = await fetch(Const.Link + `api/graph/tools/${toolId}`, {
+    method: "PUT",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+  return ProcessAPI(res);
 };
