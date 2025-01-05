@@ -1,0 +1,375 @@
+{
+	"info": {
+		"_postman_id": "21ec9f11-bc13-43f7-b1fa-918032331f17",
+		"name": "Attack Graph API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38366334",
+		"_collection_link": "https://spartanjohn117.postman.co/workspace/Cyber-Security-Graph~18393660-e168-4b8d-9d02-93839d6aef82/collection/38366334-21ec9f11-bc13-43f7-b1fa-918032331f17?action=share&source=collection_link&creator=38366334"
+	},
+	"item": [
+		{
+			"name": "Create Graph",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test('Response has required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.have.property('idx');",
+							"    pm.expect(responseData).to.have.property('query');",
+							"    pm.expect(responseData).to.have.property('agents');",
+							"    pm.expect(responseData.agents).to.be.an('array');",
+							"});",
+							"",
+							"pm.test('Agent data is correct', function () {",
+							"    const responseData = pm.response.json();",
+							"    const agent = responseData.agents[0];",
+							"    pm.expect(agent).to.have.property('name');",
+							"    pm.expect(agent).to.have.property('tools');",
+							"    pm.expect(agent.tools).to.be.an('array');",
+							"    pm.expect(agent).to.have.property('idx');",
+							"});",
+							"",
+							"// Store graph ID for later tests",
+							"if (pm.response.code === 201) {",
+							"    pm.environment.set('graphId', pm.response.json()._id);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/graph",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"graph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Graphs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Response is array', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.be.an('array');",
+							"});",
+							"",
+							"pm.test('Graphs have correct structure', function () {",
+							"    const responseData = pm.response.json();",
+							"    if (responseData.length > 0) {",
+							"        const graph = responseData[0];",
+							"        pm.expect(graph).to.have.property('idx');",
+							"        pm.expect(graph).to.have.property('query');",
+							"        pm.expect(graph).to.have.property('agents');",
+							"        pm.expect(graph.agents).to.be.an('array');",
+							"    }",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/graph",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"graph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Graph by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Graph has correct ID', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData._id).to.equal(pm.environment.get('graphId'));",
+							"});",
+							"",
+							"pm.test('Graph has complete structure', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.have.property('idx');",
+							"    pm.expect(responseData).to.have.property('query');",
+							"    pm.expect(responseData).to.have.property('agents');",
+							"    pm.expect(responseData).to.have.property('response');",
+							"    pm.expect(responseData).to.have.property('total_tokens');",
+							"    pm.expect(responseData).to.have.property('is_active');",
+							"});",
+							"",
+							"pm.test('Agents have required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"    if (responseData.agents.length > 0) {",
+							"        const agent = responseData.agents[0];",
+							"        pm.expect(agent).to.have.property('name');",
+							"        pm.expect(agent).to.have.property('tools');",
+							"        pm.expect(agent).to.have.property('images');",
+							"        pm.expect(agent).to.have.property('output');",
+							"        pm.expect(agent).to.have.property('idx');",
+							"    }",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/graph/{{graphId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"graph",
+						"{{graphId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editGraph",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Graph has correct ID', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData._id).to.equal(pm.environment.get('graphId'));",
+							"});",
+							"",
+							"pm.test('Graph has complete structure', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.have.property('idx');",
+							"    pm.expect(responseData).to.have.property('query');",
+							"    pm.expect(responseData).to.have.property('agents');",
+							"    pm.expect(responseData).to.have.property('response');",
+							"    pm.expect(responseData).to.have.property('total_tokens');",
+							"    pm.expect(responseData).to.have.property('is_active');",
+							"});",
+							"",
+							"pm.test('Agents have required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"    if (responseData.agents.length > 0) {",
+							"        const agent = responseData.agents[0];",
+							"        pm.expect(agent).to.have.property('name');",
+							"        pm.expect(agent).to.have.property('tools');",
+							"        pm.expect(agent).to.have.property('images');",
+							"        pm.expect(agent).to.have.property('output');",
+							"        pm.expect(agent).to.have.property('idx');",
+							"    }",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/graph/{{graphId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"graph",
+						"{{graphId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editAgent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Graph has correct ID', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData._id).to.equal(pm.environment.get('graphId'));",
+							"});",
+							"",
+							"pm.test('Graph has complete structure', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.have.property('idx');",
+							"    pm.expect(responseData).to.have.property('query');",
+							"    pm.expect(responseData).to.have.property('agents');",
+							"    pm.expect(responseData).to.have.property('response');",
+							"    pm.expect(responseData).to.have.property('total_tokens');",
+							"    pm.expect(responseData).to.have.property('is_active');",
+							"});",
+							"",
+							"pm.test('Agents have required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"    if (responseData.agents.length > 0) {",
+							"        const agent = responseData.agents[0];",
+							"        pm.expect(agent).to.have.property('name');",
+							"        pm.expect(agent).to.have.property('tools');",
+							"        pm.expect(agent).to.have.property('images');",
+							"        pm.expect(agent).to.have.property('output');",
+							"        pm.expect(agent).to.have.property('idx');",
+							"    }",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/graph/{{graphId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"graph",
+						"{{graphId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editTool",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Graph has correct ID', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData._id).to.equal(pm.environment.get('graphId'));",
+							"});",
+							"",
+							"pm.test('Graph has complete structure', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.have.property('idx');",
+							"    pm.expect(responseData).to.have.property('query');",
+							"    pm.expect(responseData).to.have.property('agents');",
+							"    pm.expect(responseData).to.have.property('response');",
+							"    pm.expect(responseData).to.have.property('total_tokens');",
+							"    pm.expect(responseData).to.have.property('is_active');",
+							"});",
+							"",
+							"pm.test('Agents have required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"    if (responseData.agents.length > 0) {",
+							"        const agent = responseData.agents[0];",
+							"        pm.expect(agent).to.have.property('name');",
+							"        pm.expect(agent).to.have.property('tools');",
+							"        pm.expect(agent).to.have.property('images');",
+							"        pm.expect(agent).to.have.property('output');",
+							"        pm.expect(agent).to.have.property('idx');",
+							"    }",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/graph/{{graphId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"graph",
+						"{{graphId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Pre-request script for the entire collection",
+					"// Can be used for authentication tokens, etc."
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	]
+}
