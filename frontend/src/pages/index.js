@@ -2,25 +2,26 @@ import React, { useState, useEffect } from "react";
 import GraphContainer from "../components/graph/GraphContainer";
 import { allList } from "./api/endpoint";
 import { Toaster, toast } from 'sonner'
-import { Const } from "../utils/Constant";
 
 const Index = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({search:""});
   console.log(searchParams,"searchParams");
   const fetchData = async () => {
-    const response = await allList(searchParams);
-    // const res = await fetch(
-    //     Const.Link + `api/graph?search=${searchParams}`,
-    //     {
-    //       method: "GET",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    setData(response);
+    try {
+      setLoading(true);
+      const response = await allList(searchParams);
+      setData(response);
+    }
+    catch (error) {
+      console.error(error);
+      toast.error('Error fetching data');
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const Index = () => {
     <>
     <Toaster />
     <main className="min-h-screen">
-      <GraphContainer data={data} setUpdate={setUpdate} handleSearch={handleSearch} />
+      <GraphContainer data={data} loading={loading} setUpdate={setUpdate} handleSearch={handleSearch} />
     </main>
     </>
   );
