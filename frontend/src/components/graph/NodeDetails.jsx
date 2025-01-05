@@ -1,6 +1,7 @@
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import CreateNodeDialog from './CreateNodeDialog';
+import EditAgentDialog from './EditAgentDialog';
+import EditToolDialog from './EditToolDialog';
 
 const NodeDetails = ({ node, onEdit }) => {
   if (!node) return null;
@@ -9,7 +10,11 @@ const NodeDetails = ({ node, onEdit }) => {
     <Card>
       <CardHeader>
         <CardTitle>{node.label}</CardTitle>
-        <CreateNodeDialog mode="edit" initialData={node} onSubmit={onEdit} />
+        {node.type === 'agent' ? (
+          <EditAgentDialog node={node} onSubmit={onEdit} />
+        ) : (
+          <EditToolDialog node={node} onSubmit={onEdit} />
+        )}
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

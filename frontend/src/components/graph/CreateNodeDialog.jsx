@@ -26,12 +26,11 @@ const CreateNodeDialog = ({ onSubmit, mode = 'create', initialData = null }) => 
     response: ''
   });
 
-  console.log(initialData,"initialData") ;
 
   useEffect(() => {
     if (mode === 'edit' && initialData) {
 
-      
+
       setFormData({
         query: initialData.query || '',
         agentName: initialData.name || '',

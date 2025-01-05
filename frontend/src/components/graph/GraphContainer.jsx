@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import cytoscape from 'cytoscape';
 import { Card } from '../ui/card';
-import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import NodeDetails from './NodeDetails';
 import GraphControls from './GraphControls';
@@ -9,8 +8,8 @@ import cola from 'cytoscape-cola';
 import CreateNodeDialog from './CreateNodeDialog';
 import { graphStyles } from '../../constants/graphStyles';
 import { toast } from 'sonner'
-import { editNode } from '../../pages/api/endpoint';
 import { Const } from '@/utils/Constant';
+import { updateAgent, updateTool } from '@/pages/api/endpoint';
 
 cytoscape.use(cola);
 
@@ -66,10 +65,15 @@ const GraphContainer = ({ data, setUpdate, handleSearch }) => {
   };
 
   const handleEditNode = async (updatedNode) => {
+    console.log(updatedNode,"updatedNode");
     try {
-      const agentId = selectedNode.id;
-      const userId = selectedNode.userId || 'default'; // Adjust based on your data structure
-      await editNode(userId, JSON.stringify(updatedNode), agentId);
+      const nodeId = selectedNode.id;
+      console.log(nodeId,"nodeId");
+      if (selectedNode.type === 'agent') {
+        await updateAgent(nodeId, updatedNode);
+      } else {
+        await updateTool(nodeId, updatedNode);
+      }
       setUpdate(prev => !prev);
       toast.success('Node updated successfully');
     } catch (error) {
